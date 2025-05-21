@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.shatteredpixel.shatteredpixeldungeon.android'
-    compileSdk appAndroidCompileSDK
+    compileSdk 35
     compileOptions.sourceCompatibility = compileOptions.targetCompatibility = appJavaCompatibility
 
     sourceSets.main.assets.srcDirs = [new File(project(':core').projectDir, "/src/main/assets")]
@@ -63,15 +63,15 @@ dependencies {
     // The 1.12.0+ natives are compiled with a version of the NDK which drops 4.3- support
     // YES, THIS IS VERY DANGEROUS! 1.11.0 natives may only incidentally work with later libGDX versions
     implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-    natives "com.badlogicgames.gdx:gdx-platform:1.11.0:natives-armeabi-v7a"
-    natives "com.badlogicgames.gdx:gdx-platform:1.11.0:natives-arm64-v8a"
-    natives "com.badlogicgames.gdx:gdx-platform:1.11.0:natives-x86"
-    natives "com.badlogicgames.gdx:gdx-platform:1.11.0:natives-x86_64"
+    natives 'com.badlogicgames.gdx:gdx-platform:1.13.5:natives-armeabi-v7a'
+    natives 'com.badlogicgames.gdx:gdx-platform:1.13.5:natives-arm64-v8a'
+    natives 'com.badlogicgames.gdx:gdx-platform:1.13.5:natives-x86'
+    natives 'com.badlogicgames.gdx:gdx-platform:1.13.5:natives-x86_64'
     implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-    natives "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0:natives-armeabi-v7a"
-    natives "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0:natives-arm64-v8a"
-    natives "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0:natives-x86"
-    natives "com.badlogicgames.gdx:gdx-freetype-platform:1.11.0:natives-x86_64"
+    natives 'com.badlogicgames.gdx:gdx-freetype-platform:1.13.5:natives-armeabi-v7a'
+    natives 'com.badlogicgames.gdx:gdx-freetype-platform:1.13.5:natives-arm64-v8a'
+    natives 'com.badlogicgames.gdx:gdx-freetype-platform:1.13.5:natives-x86'
+    natives 'com.badlogicgames.gdx:gdx-freetype-platform:1.13.5:natives-x86_64'
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
 }
 

@@ -17,18 +17,18 @@ allprojects {
         appName = 'Hazy Pixel Rogue'
         appPackageName = 'com.hazypixelrogue.hazypixelrogue'
 
-        appVersionCode = 834
-        appVersionName = '3.0.3-HazyPixelRogue'
+        appVersionCode = 835
+        appVersionName = '3.0.5-HazyPixelRogue'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
         appAndroidCompileSDK = 34
-        appAndroidMinSDK = 14
+        appAndroidMinSDK = 21
         appAndroidTargetSDK = 34
 
-        gdxVersion = '1.12.1'
+        gdxVersion = '1.13.5'
         gdxControllersVersion = '2.2.4-SNAPSHOT'
-        robovmVersion = '2.3.21'
+        robovmVersion = '2.3.23'
     }
     version = appVersionName
 

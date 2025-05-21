@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.desktop;
 
+import static com.watabou.noosa.Game.reportException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
@@ -61,36 +63,40 @@ public class DesktopPlatformSupport extends PlatformSupport {
 
 	@Override
 	public void updateSystemUI() {
-		Gdx.app.postRunnable( new Runnable() {
-			@Override
-			public void run () {
-				if (SPDSettings.fullscreen()){
-					int monitorNum = 0;
-					if (!first){
-						Graphics.Monitor[] monitors = Gdx.graphics.getMonitors();
-						for (int i = 0; i < monitors.length; i++){
-							if (((Lwjgl3Graphics.Lwjgl3Monitor)Gdx.graphics.getMonitor()).getMonitorHandle()
-									== ((Lwjgl3Graphics.Lwjgl3Monitor)monitors[i]).getMonitorHandle()) {
-								monitorNum = i;
-							}
-						}
-					} else {
-						monitorNum = SPDSettings.fulLScreenMonitor();
-					}
+		try {
+			Gdx.app.postRunnable(() -> {
+                if (SPDSettings.fullscreen()){
+                    int monitorNum = 0;
+                    if (!first){
+                        Graphics.Monitor[] monitors = Gdx.graphics.getMonitors();
+                        for (int i = 0; i < monitors.length; i++){
+                            if (((Lwjgl3Graphics.Lwjgl3Monitor)Gdx.graphics.getMonitor()).getMonitorHandle()
+                                    == ((Lwjgl3Graphics.Lwjgl3Monitor)monitors[i]).getMonitorHandle()) {
+                                monitorNum = i;
+                            }
+                        }
+                    } else {
+                        monitorNum = SPDSettings.fulLScreenMonitor();
+                    }
 
-					Graphics.Monitor[] monitors = Gdx.graphics.getMonitors();
-					if (monitors.length <= monitorNum) {
-						monitorNum = 0;
-					}
-					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode(monitors[monitorNum]));
-					SPDSettings.fulLScreenMonitor(monitorNum);
-				} else {
-					Point p = SPDSettings.windowResolution();
-					Gdx.graphics.setWindowedMode( p.x, p.y );
-				}
-				first = false;
-			}
-		} );
+                    Graphics.Monitor[] monitors = Gdx.graphics.getMonitors();
+                    if (monitors.length <= monitorNum) {
+                        monitorNum = 0;
+                    }
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode(monitors[monitorNum]));
+                    SPDSettings.fulLScreenMonitor(monitorNum);
+                } else {
+                    Point p = SPDSettings.windowResolution();
+                    Gdx.graphics.setWindowedMode( p.x, p.y );
+                }
+                first = false;
+            });
+		} catch (Exception e) {
+			//if we fail to set the system UI, just ignore it
+			//this is a workaround for a bug in libgdx where the system UI doesn't get set correctly
+			//on some systems (eg. Linux)
+			reportException(e);
+		}
 	}
 	
 	@Override
