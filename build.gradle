@@ -7,18 +7,18 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.7.1'
+        classpath 'com.android.tools.build:gradle:8.10.0'
     }
 }
 
 allprojects {
 
     ext {
-        appName = 'Shattered Pixel Dungeon'
-        appPackageName = 'com.shatteredpixel.shatteredpixeldungeon'
+        appName = 'Hazy Pixel Rogue'
+        appPackageName = 'com.hazypixelrogue.hazypixelrogue'
 
-        appVersionCode = 833
-        appVersionName = '3.0.2'
+        appVersionCode = 834
+        appVersionName = '3.0.3-HazyPixelRogue'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
