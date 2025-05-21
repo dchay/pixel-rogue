@@ -38,6 +38,7 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	public static final float HUNGRY	= 300f;
 	public static final float STARVING	= 450f;
+	public static final float NEAR_STARVING	= STARVING - 1f;
 
 	private float level;
 	private float partialDamage;
@@ -145,28 +146,29 @@ public class Hunger extends Buff implements Hero.Doom {
 		level -= energy;
 		if (level < 0 && !overrideLimits) {
 			level = 0;
-		} else if (level > STARVING) {
-			float excess = level - STARVING;
-			level = STARVING;
-			partialDamage += excess * (target.HT/1000f);
-			if (partialDamage > 1f){
-				target.damage( (int)partialDamage, this );
-				partialDamage -= (int)partialDamage;
-			}
+		} else if (level >= STARVING) {
+//			float excess = level - STARVING;
+			level = NEAR_STARVING;
+//			partialDamage += excess * (target.HT/1000f);
+//			if (partialDamage > 1f){
+//				target.damage( (int)partialDamage, this );
+//				partialDamage -= (int)partialDamage;
+//			}
 		}
 
 		if (oldLevel < HUNGRY && level >= HUNGRY){
 			GLog.w( Messages.get(this, "onhungry") );
-		} else if (oldLevel < STARVING && level >= STARVING){
-			GLog.n( Messages.get(this, "onstarving") );
-			target.damage( 1, this );
 		}
+//		else if (oldLevel < STARVING && level >= STARVING){
+//			GLog.n( Messages.get(this, "onstarving") );
+//			target.damage( 1, this );
+//		}
 
 		BuffIndicator.refreshHero();
 	}
 
 	public boolean isStarving() {
-		return level >= STARVING;
+		return false; //level >= STARVING;
 	}
 
 	public int hunger() {

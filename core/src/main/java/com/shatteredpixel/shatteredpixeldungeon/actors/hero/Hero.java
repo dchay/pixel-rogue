@@ -2037,7 +2037,7 @@ public class Hero extends Char {
 	}
 	
 	public boolean isStarving() {
-		return Buff.affect(this, Hunger.class).isStarving();
+		return false; //Buff.affect(this, Hunger.class).isStarving();
 	}
 	
 	@Override
