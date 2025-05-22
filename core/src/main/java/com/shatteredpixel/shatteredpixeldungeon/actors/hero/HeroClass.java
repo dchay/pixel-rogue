@@ -234,11 +234,15 @@ public enum HeroClass {
 		(hero.belongings.weapon = new Rapier()).identify();
 		hero.belongings.weapon.activate(hero);
 
-		ThrowingSpike spikes = new ThrowingSpike();
-		spikes.quantity(2).collect();
+
+		SpiritBow bow = new SpiritBow();
+		bow.identify().collect();
+
+//		ThrowingSpike spikes = new ThrowingSpike();
+//		spikes.quantity(2).collect();
 
 		Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
-		Dungeon.quickslot.setSlot(1, spikes);
+		Dungeon.quickslot.setSlot(1, bow);
 
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
