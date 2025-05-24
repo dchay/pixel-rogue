@@ -970,7 +970,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, NATURES_BOUNTY, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, NATURES_AID);
 				break;
 			case DUELIST:
-				Collections.addAll(tierTalents, HEARTY_MEAL, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, AGGRESSIVE_BARRIER);
+				Collections.addAll(tierTalents, HEARTY_MEAL, PROVOKED_ANGER, AGGRESSIVE_BARRIER, FOLLOWUP_STRIKE, SURVIVALISTS_INTUITION, ADVENTURERS_INTUITION);
 //				Collections.addAll(tierTalents, STRENGTHENING_MEAL, ADVENTURERS_INTUITION, PATIENT_STRIKE, AGGRESSIVE_BARRIER);
 				break;
 			case CLERIC:
@@ -1000,7 +1000,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, INVIGORATING_MEAL, LIQUID_NATURE, REJUVENATING_STEPS, HEIGHTENED_SENSES, DURABLE_PROJECTILES);
 				break;
 			case DUELIST:
-				Collections.addAll(tierTalents, STRENGTHENING_MEAL, SILENT_STEPS, WIDE_SEARCH, HEIGHTENED_SENSES, ROGUES_FORESIGHT);
+				Collections.addAll(tierTalents, STRENGTHENING_MEAL, INVIGORATING_MEAL, SILENT_STEPS, WIDE_SEARCH, HEIGHTENED_SENSES, ROGUES_FORESIGHT);
 //				Collections.addAll(tierTalents, FOCUSED_MEAL, LIQUID_AGILITY, WEAPON_RECHARGING, LETHAL_HASTE, SWIFT_EQUIP);
 				break;
 			case CLERIC:
@@ -1030,7 +1030,7 @@ public enum Talent {
 				Collections.addAll(tierTalents, POINT_BLANK, SEER_SHOT);
 				break;
 			case DUELIST:
-				Collections.addAll(tierTalents, PRECISE_ASSAULT, DEADLY_FOLLOWUP, POINT_BLANK, SEER_SHOT);
+				Collections.addAll(tierTalents, DEADLY_FOLLOWUP, ENHANCED_RINGS, STRONGMAN);
 				break;
 			case CLERIC:
 				Collections.addAll(tierTalents, CLEANSE, LIGHT_READING);

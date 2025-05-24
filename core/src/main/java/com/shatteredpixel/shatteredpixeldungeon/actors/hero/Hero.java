@@ -196,7 +196,7 @@ public class Hero extends Char {
 	public static final int MAX_LEVEL = 30;
 
 	public static final int STARTING_STR = 13;
-	public static final int STARTING_HT = 50;
+	public static final int STARTING_HT = 30;
 	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
@@ -387,9 +387,12 @@ public class Hero extends Char {
 			|| (tier == 4 && armorAbility == null)) {
 			return 1;
 		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
-			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
-		} else {
-			return 1 + lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
+			return (Talent.tierLevelThresholds[tier+1] -
+							Talent.tierLevelThresholds[tier]) -
+					talentPointsSpent(tier) + bonusTalentPoints(tier);
+		}
+		else {
+			return 1 + (lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier)) + bonusTalentPoints(tier);
 		}
 	}
 
@@ -397,12 +400,12 @@ public class Hero extends Char {
 		if (lvl < (Talent.tierLevelThresholds[tier]-1)
 				|| (tier == 3 && subClass == HeroSubClass.NONE)
 				|| (tier == 4 && armorAbility == null)) {
-			return 1;
+			return 2;
 		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
 					&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
-			return 3;
+			return 4;
 		} else {
-			return 1;
+			return 2;
 		}
 	}
 	
@@ -1145,14 +1148,14 @@ public class Hero extends Char {
 			Heap heap = Dungeon.level.heaps.get( dst );
 			if (heap != null && (heap.type != Type.HEAP && heap.type != Type.FOR_SALE)) {
 				
-				if ((heap.type == Type.LOCKED_CHEST && Notes.keyCount(new GoldenKey(Dungeon.depth)) < 1)
-					|| (heap.type == Type.CRYSTAL_CHEST && Notes.keyCount(new CrystalKey(Dungeon.depth)) < 1)){
-
-						GLog.w( Messages.get(this, "locked_chest") );
-						ready();
-						return false;
-
-				}
+//				if ((heap.type == Type.LOCKED_CHEST && Notes.keyCount(new GoldenKey(Dungeon.depth)) < 1)
+//					|| (heap.type == Type.CRYSTAL_CHEST && Notes.keyCount(new CrystalKey(Dungeon.depth)) < 1)){
+//
+//						GLog.w( Messages.get(this, "locked_chest") );
+//						ready();
+//						return false;
+//
+//				}
 				
 				switch (heap.type) {
 				case TOMB:
@@ -1189,36 +1192,38 @@ public class Hero extends Char {
 		if (Dungeon.level.adjacent( pos, doorCell )) {
 			path = null;
 			
-			boolean hasKey = true;//false;
+//			final boolean hasKey = true;//false;
 			int door = Dungeon.level.map[doorCell];
 			
-			if (door == Terrain.LOCKED_DOOR
-					&& Notes.keyCount(new IronKey(Dungeon.depth)) > 0) {
-				
-				hasKey = true;
-				
-			} else if (door == Terrain.CRYSTAL_DOOR
-					&& Notes.keyCount(new CrystalKey(Dungeon.depth)) > 0) {
-
-				hasKey = true;
-
-			} else if (door == Terrain.LOCKED_EXIT
-					&& Notes.keyCount(new SkeletonKey(Dungeon.depth)) > 0) {
-
-				hasKey = true;
-				
-			}
+//			if (door == Terrain.LOCKED_DOOR
+//					&& Notes.keyCount(new IronKey(Dungeon.depth)) > 0) {
+//
+//				hasKey = true;
+//
+//			} else if (door == Terrain.CRYSTAL_DOOR
+//					&& Notes.keyCount(new CrystalKey(Dungeon.depth)) > 0) {
+//
+//				hasKey = true;
+//
+//			} else if (door == Terrain.LOCKED_EXIT
+//					&& Notes.keyCount(new SkeletonKey(Dungeon.depth)) > 0) {
+//
+//				hasKey = true;
+//
+//			}
 			
-			if (hasKey) {
+//			if (hasKey)
+			{
 				
 				sprite.operate( doorCell );
 				
 				Sample.INSTANCE.play( Assets.Sounds.UNLOCK );
 				
-			} else {
-				GLog.w( Messages.get(this, "locked_door") );
-				ready();
 			}
+//			else {
+//				GLog.w( Messages.get(this, "locked_door") );
+//				ready();
+//			}
 
 			return false;
 
@@ -2305,23 +2310,30 @@ public class Hero extends Char {
 			int door = Dungeon.level.map[doorCell];
 			
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
-				boolean hasKey = true;
+//				final boolean hasKey = true;
 				if (door == Terrain.LOCKED_DOOR) {
-					hasKey = Notes.remove(new IronKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.DOOR);
+//					hasKey =
+							Notes.remove(new IronKey(Dungeon.depth));
+//					if (hasKey)
+						Level.set(doorCell, Terrain.DOOR);
 				} else if (door == Terrain.CRYSTAL_DOOR) {
-					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
-					if (hasKey) {
+//					hasKey =
+							Notes.remove(new CrystalKey(Dungeon.depth));
+//					if (hasKey)
+					{
 						Level.set(doorCell, Terrain.EMPTY);
 						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 						CellEmitter.get( doorCell ).start( Speck.factory( Speck.DISCOVER ), 0.025f, 20 );
 					}
 				} else {
-					hasKey = Notes.remove(new SkeletonKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.UNLOCKED_EXIT);
+//					hasKey =
+							Notes.remove(new SkeletonKey(Dungeon.depth));
+//					if (hasKey)
+						Level.set(doorCell, Terrain.UNLOCKED_EXIT);
 				}
 				
-				if (hasKey) {
+//				if (hasKey)
+				{
 					GameScene.updateKeyDisplay();
 					GameScene.updateMap(doorCell);
 					spend(Key.TIME_TO_UNLOCK);
@@ -2333,16 +2345,19 @@ public class Hero extends Char {
 			Heap heap = Dungeon.level.heaps.get( ((HeroAction.OpenChest)curAction).dst );
 			
 			if (Dungeon.level.distance(pos, heap.pos) <= 1){
-				boolean hasKey = true;
+//				final boolean hasKey = true;
 				if (heap.type == Type.SKELETON || heap.type == Type.REMAINS) {
 					Sample.INSTANCE.play( Assets.Sounds.BONES );
 				} else if (heap.type == Type.LOCKED_CHEST){
-					hasKey = Notes.remove(new GoldenKey(Dungeon.depth));
+//					hasKey =
+							Notes.remove(new GoldenKey(Dungeon.depth));
 				} else if (heap.type == Type.CRYSTAL_CHEST){
-					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
+//					hasKey =
+							Notes.remove(new CrystalKey(Dungeon.depth));
 				}
 				
-				if (hasKey) {
+//				if (hasKey)
+				{
 					GameScene.updateKeyDisplay();
 					heap.open(this);
 					spend(Key.TIME_TO_UNLOCK);

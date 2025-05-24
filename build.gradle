@@ -17,8 +17,8 @@ allprojects {
         appName = 'Hazy Pixel Rogue'
         appPackageName = 'com.hazypixelrogue.hazypixelrogue'
 
-        appVersionCode = 844
-        appVersionName = '3.4.4-HazyPixelRogue'
+        appVersionCode = 849
+        appVersionName = '3.4.9-HazyPixelRogue'
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
