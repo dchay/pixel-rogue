@@ -244,8 +244,32 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
 		Dungeon.quickslot.setSlot(1, bow);
 
+		if (hero.belongings.armor != null){
+			hero.belongings.armor.affixSeal(new BrokenSeal());
+			Catalog.setSeen(BrokenSeal.class); //as it's not added to the inventory
+		}
+
+		new Cudgel().identify();
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+		new ScrollOfUpgrade().identify();
+		new PotionOfLiquidFlame().identify();
+		new ScrollOfMagicMapping().identify();
+		new PotionOfInvisibility().identify();
+		new PotionOfMindVision().identify();
+		new ScrollOfLullaby().identify();
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
+		new PotionOfPurity().identify();
+		new ScrollOfRemoveCurse().identify();
+		new HolyTome().identify();
+		new Gloves().identify();
+		new ThrowingKnife().identify();
+		new CloakOfShadows().identify();
+		new Dagger().identify();
+		new WandOfMagicMissile().identify();
+		new ThrowingStone().identify();
+		new WornShortsword().identify();
 	}
 
 	private static void initCleric( Hero hero ) {

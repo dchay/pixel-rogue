@@ -37,8 +37,8 @@ import com.watabou.utils.Bundle;
 public class Hunger extends Buff implements Hero.Doom {
 
 	public static final float HUNGRY	= 300f;
-	public static final float STARVING	= 450f;
-	public static final float NEAR_STARVING	= STARVING - 1f;
+	public static final float STARVING	= 800f;
+	public static final float NEAR_STARVING	= STARVING - 100f;
 
 	private float level;
 	private float partialDamage;
@@ -77,12 +77,12 @@ public class Hunger extends Buff implements Hero.Doom {
 
 			if (isStarving()) {
 
-				partialDamage += target.HT/1000f;
-
-				if (partialDamage > 1){
-					target.damage( (int)partialDamage, this);
-					partialDamage -= (int)partialDamage;
-				}
+//				partialDamage += target.HT/1000f;
+//
+//				if (partialDamage > 1){
+//					target.damage( (int)partialDamage, this);
+//					partialDamage -= (int)partialDamage;
+//				}
 				
 			} else {
 
@@ -93,13 +93,13 @@ public class Hunger extends Buff implements Hero.Doom {
 				hungerDelay /= SaltCube.hungerGainMultiplier();
 
 				float newLevel = level + (1f/hungerDelay);
-				if (newLevel >= STARVING) {
+				if (newLevel >= NEAR_STARVING) {
 
-					GLog.n( Messages.get(this, "onstarving") );
-					hero.damage( 1, this );
-
-					hero.interrupt();
-					newLevel = STARVING;
+//					GLog.n( Messages.get(this, "onstarving") );
+//					hero.damage( 1, this );
+//
+//					hero.interrupt();
+					newLevel = NEAR_STARVING;
 
 				} else if (newLevel >= HUNGRY && level < HUNGRY) {
 
@@ -146,7 +146,7 @@ public class Hunger extends Buff implements Hero.Doom {
 		level -= energy;
 		if (level < 0 && !overrideLimits) {
 			level = 0;
-		} else if (level >= STARVING) {
+		} else if (level >= NEAR_STARVING) {
 //			float excess = level - STARVING;
 			level = NEAR_STARVING;
 //			partialDamage += excess * (target.HT/1000f);

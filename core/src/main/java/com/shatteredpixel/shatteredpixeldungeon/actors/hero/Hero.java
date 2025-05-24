@@ -195,12 +195,12 @@ public class Hero extends Char {
 	
 	public static final int MAX_LEVEL = 30;
 
-	public static final int STARTING_STR = 12;
-	public static final int STARTING_HT = 40;
+	public static final int STARTING_STR = 13;
+	public static final int STARTING_HT = 50;
 	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
-	private static final float HUNGER_FOR_SEARCH	= 6f;
+	private static final float HUNGER_FOR_SEARCH	= -1f;
 	
 	public HeroClass heroClass = HeroClass.ROGUE;
 	public HeroSubClass subClass = HeroSubClass.NONE;
@@ -385,7 +385,7 @@ public class Hero extends Char {
 		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
 			|| (tier == 3 && subClass == HeroSubClass.NONE)
 			|| (tier == 4 && armorAbility == null)) {
-			return 0;
+			return 1;
 		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
 			return Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier) + bonusTalentPoints(tier);
 		} else {
@@ -397,12 +397,12 @@ public class Hero extends Char {
 		if (lvl < (Talent.tierLevelThresholds[tier]-1)
 				|| (tier == 3 && subClass == HeroSubClass.NONE)
 				|| (tier == 4 && armorAbility == null)) {
-			return 0;
+			return 1;
 		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
 					&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
-			return 2;
+			return 3;
 		} else {
-			return 0;
+			return 1;
 		}
 	}
 	
@@ -1189,7 +1189,7 @@ public class Hero extends Char {
 		if (Dungeon.level.adjacent( pos, doorCell )) {
 			path = null;
 			
-			boolean hasKey = false;
+			boolean hasKey = true;//false;
 			int door = Dungeon.level.map[doorCell];
 			
 			if (door == Terrain.LOCKED_DOOR
@@ -2363,8 +2363,8 @@ public class Hero extends Char {
 		
 		boolean smthFound = false;
 
-		boolean circular = pointsInTalent(Talent.WIDE_SEARCH) == 1;
-		int distance = heroClass == HeroClass.ROGUE ? 2 : 1;
+		boolean circular = pointsInTalent(Talent.WIDE_SEARCH) >= 1;
+		int distance = 2; //heroClass == HeroClass.ROGUE ? 2 : 1;
 		if (hasTalent(Talent.WIDE_SEARCH)) distance++;
 		
 		boolean foresight = buff(Foresight.class) != null;
@@ -2439,11 +2439,11 @@ public class Hero extends Char {
 							
 						//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
 						} else if (Dungeon.level.map[curr] == Terrain.SECRET_TRAP) {
-							chance = 0.4f - (Dungeon.depth / 250f);
+							chance = 0.7f - (Dungeon.depth / 500f);
 							
 						//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
 						} else {
-							chance = 0.8f - (Dungeon.depth / 100f);
+							chance = 0.9f - (Dungeon.depth / 300f);
 						}
 
 						//don't want to let the player search though hidden doors in tutorial
