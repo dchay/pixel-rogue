@@ -193,7 +193,7 @@ public class Hero extends Char {
 		alignment = Alignment.ALLY;
 	}
 	
-	public static final int MAX_LEVEL = 30;
+	public static final int MAX_LEVEL = 300;
 
 	public static final int STARTING_STR = 13;
 	public static final int STARTING_HT = 30;
