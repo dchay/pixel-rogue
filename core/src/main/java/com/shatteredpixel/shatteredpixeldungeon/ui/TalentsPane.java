@@ -200,9 +200,9 @@ public class TalentsPane extends ScrollPane {
 				stars.clear();
 			}
 
-			int totStars = Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier] + Dungeon.hero.bonusTalentPoints(tier);
-			int openStars = Dungeon.hero.talentPointsAvailable(tier);
-			int usedStars = Dungeon.hero.talentPointsSpent(tier);
+			final int totStars = Dungeon.hero.talentPointsMaxByTier(tier);
+			final int usedStars = Dungeon.hero.talentPointsSpentByTier(tier);
+			final int openStars = Dungeon.hero.talentPointsMaxByTier(tier) - usedStars;
 			for (int i = 0; i < totStars; i++){
 				Image im = new Speck().image(Speck.STAR);
 				stars.add(im);

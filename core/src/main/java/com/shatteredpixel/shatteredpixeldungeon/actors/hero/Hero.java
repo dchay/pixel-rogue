@@ -373,7 +373,7 @@ public class Hero extends Char {
 		Talent.onTalentUpgraded(this, talent);
 	}
 
-	public int talentPointsSpent(int tier){
+	public int talentPointsSpentByTier(int tier){
 		int total = 0;
 		for (int i : talents.get(tier-1).values()){
 			total += i;
@@ -381,33 +381,52 @@ public class Hero extends Char {
 		return total;
 	}
 
-	public int talentPointsAvailable(int tier){
-		if (lvl < (Talent.tierLevelThresholds[tier] - 1)
-			|| (tier == 3 && subClass == HeroSubClass.NONE)
-			|| (tier == 4 && armorAbility == null)) {
-			return 1;
-		} else if (lvl >= Talent.tierLevelThresholds[tier+1]){
-			return (Talent.tierLevelThresholds[tier+1] -
-							Talent.tierLevelThresholds[tier]) -
-					talentPointsSpent(tier) + bonusTalentPoints(tier);
+	int totalTalentPointsSpent(){
+		int total = 0;
+		for (int i = 0; i < talents.size(); i++){
+			total += talentPointsSpentByTier(i+1);
 		}
-		else {
-			return 1 + (lvl - Talent.tierLevelThresholds[tier] - talentPointsSpent(tier)) + bonusTalentPoints(tier);
-		}
+		return total;
 	}
 
-	public int bonusTalentPoints(int tier){
-		if (lvl < (Talent.tierLevelThresholds[tier]-1)
-				|| (tier == 3 && subClass == HeroSubClass.NONE)
-				|| (tier == 4 && armorAbility == null)) {
-			return 2;
-		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
-					&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
-			return 4;
-		} else {
-			return 2;
+	public int totalTalentPointsAvailable(){
+		return lvl * 2;
+	}
+
+	public int talentPointsMaxByTier(int tier){
+
+		final int boost = (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
+				&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) ? 2 : 0;
+
+		switch (tier)
+		{
+			case 1:
+            case 2:
+                return 6 * 2;
+            case 3:
+				return 6 * 3;
+			case 4:
+				return totalTalentPointsAvailable() - totalTalentPointsSpent();
+			default:
+				return 0;
 		}
 	}
+	public int talentPointsAvailableByTier(int tier){
+		return Math.min(talentPointsMaxByTier(tier) - talentPointsSpentByTier(tier), totalTalentPointsAvailable() - totalTalentPointsSpent());
+	}
+
+//	public int bonusTalentPoints(int tier){
+//		if (lvl < (Talent.tierLevelThresholds[tier]-1)
+//				|| (tier == 3 && subClass == HeroSubClass.NONE)
+//				|| (tier == 4 && armorAbility == null)) {
+//			return 2;
+//		} else if (buff(PotionOfDivineInspiration.DivineInspirationTracker.class) != null
+//					&& buff(PotionOfDivineInspiration.DivineInspirationTracker.class).isBoosted(tier)) {
+//			return 4;
+//		} else {
+//			return 2;
+//		}
+//	}
 	
 	public String className() {
 		return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();

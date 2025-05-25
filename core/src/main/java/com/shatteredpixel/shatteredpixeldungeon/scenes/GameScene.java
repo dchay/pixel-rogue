@@ -523,7 +523,7 @@ public class GameScene extends PixelScene {
 
 			boolean unspentTalents = false;
 			for (int i = 1; i <= Dungeon.hero.talents.size(); i++){
-				if (Dungeon.hero.talentPointsAvailable(i) > 0){
+				if (Dungeon.hero.talentPointsAvailableByTier(i) > 0){
 					unspentTalents = true;
 					break;
 				}
